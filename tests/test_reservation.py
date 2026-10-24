@@ -1,0 +1,14 @@
+import server
+
+def test_reservation_refusee_si_points_insuffisants():
+    client = server.app.test_client()
+    competition = [c for c in server.competitions if c['name'] == "Spring Festival"][0]
+    places_avant = int(competition['numberOfPlaces'])
+    response = client.post("/purchasePlaces", data={
+        "club": "Iron Temple",          # le club qui a 4 points
+        "competition": "Spring Festival",
+        "places": "5",                  # plus que ses points
+    })
+    assert response.status_code == 200
+    assert b"Desole pas assez de points" in response.data
+    assert int(competition['numberOfPlaces']) == places_avant
