@@ -4,5 +4,6 @@ lib
 .Python
 .pytest_cache/
 .envrc
+.env
 venv/
 __pycache__
