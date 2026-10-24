@@ -58,6 +58,9 @@ def purchasePlaces():
     if placesRequired > MAX_PLACES_PAR_COMPETITION:
         flash("Desole maximum 12 places par competition")
         return render_template('welcome.html', club=club, competitions=competitions)
+    if placesRequired > int(competition['numberOfPlaces']):
+        flash("Desole pas assez de places disponibles")
+        return render_template('welcome.html', club=club, competitions=competitions)
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
     club['points'] = int(club['points'])-placesRequired
     flash('Great-booking complete!')
