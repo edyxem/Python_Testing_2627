@@ -17,6 +17,8 @@ def loadCompetitions():
 app = Flask(__name__)
 app.secret_key = 'something_special'
 
+MAX_PLACES_PAR_COMPETITION = 12
+
 competitions = loadCompetitions()
 clubs = loadClubs()
 
@@ -52,6 +54,9 @@ def purchasePlaces():
     placesRequired = int(request.form['places'])
     if placesRequired > int(club['points']):
         flash("Desole pas assez de points")
+        return render_template('welcome.html', club=club, competitions=competitions)
+    if placesRequired > MAX_PLACES_PAR_COMPETITION:
+        flash("Desole maximum 12 places par competition")
         return render_template('welcome.html', club=club, competitions=competitions)
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
     club['points'] = int(club['points'])-placesRequired
