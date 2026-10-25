@@ -123,7 +123,10 @@ def resume():
 app.add_url_rule('/resume', view_func=resume)
 
 
-# TODO: Add route for points display
+def tableauPoints():
+    return render_template('tableau_points.html', clubs=clubs)
+
+app.add_url_rule('/tableau-points', view_func=tableauPoints)
 
 
 @app.route('/logout')
