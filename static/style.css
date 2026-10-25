@@ -1,0 +1,220 @@
+/* Thème en niveaux de gris, comme demandé pour la démonstration (spécification, Phase 0) */
+:root {
+    --fond: #f2f2f2;
+    --surface: #ffffff;
+    --texte: #1c1c1c;
+    --texte-secondaire: #5f5f5f;
+    --bordure: #d4d4d4;
+    --fonce: #2b2b2b;
+    --clair: #e6e6e6;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--fond);
+    color: var(--texte);
+    line-height: 1.5;
+}
+
+/* En-tête et menu */
+.entete {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding: 12px 24px;
+    background: var(--fonce);
+}
+
+.entete a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+footer {
+    padding: 16px;
+    text-align: center;
+    color: var(--texte-secondaire);
+    font-size: 0.85rem;
+}
+
+/* Messages de confirmation et d'erreur */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+}
+
+.messages li {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    border-left: 6px solid var(--texte-secondaire);
+}
+
+.messages li.erreur {
+    border-left-color: var(--fonce);
+    font-weight: bold;
+}
+
+/* Cartes */
+.carte {
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.carte-etroite {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.competition h3 {
+    margin: 8px 0;
+}
+
+.competition p {
+    margin: 4px 0;
+    color: var(--texte-secondaire);
+}
+
+.solde {
+    display: inline-block;
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Statut des compétitions */
+.statut {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.statut-ouverte {
+    background: var(--fonce);
+    color: #ffffff;
+}
+
+.statut-complete {
+    background: var(--clair);
+    border: 1px solid var(--texte-secondaire);
+}
+
+.statut-terminee {
+    background: var(--clair);
+    color: var(--texte-secondaire);
+}
+
+/* Formulaires et boutons */
+.formulaire {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+input[type="email"],
+input[type="number"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--bordure);
+    border-radius: 4px;
+}
+
+button,
+.bouton {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    color: #ffffff;
+    background: var(--fonce);
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover,
+.bouton:hover {
+    background: #000000;
+}
+
+.bouton-secondaire {
+    margin: 0;
+    padding: 6px 12px;
+    color: var(--texte);
+    background: var(--clair);
+    border: 1px solid var(--bordure);
+}
+
+.bouton-secondaire:hover {
+    background: var(--bordure);
+}
+
+.aide {
+    color: var(--texte-secondaire);
+    font-size: 0.9rem;
+}
+
+/* Tableaux */
+.tableau {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+}
+
+.tableau th,
+.tableau td {
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--bordure);
+}
+
+.tableau th {
+    background: var(--clair);
+}

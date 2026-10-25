@@ -12,13 +12,13 @@ def test_parcours_complet_d_une_reservation():
     accueil = client.get("/")
     assert b'action="showSummary"' in accueil.data
     resume = client.post("/showSummary", data={"email": "john@simplylift.co"})
-    assert b"Welcome, john@simplylift.co" in resume.data
-    assert b"Points available: 13" in resume.data
+    assert b"Bienvenue, john@simplylift.co" in resume.data
+    assert b"Points disponibles : 13" in resume.data
 
     # 2. Il clique sur une compétition à venir
     assert b"/book/Spring%20Festival/Simply%20Lift" in resume.data
     formulaire = client.get("/book/Spring Festival/Simply Lift")
-    assert b"How many places?" in formulaire.data
+    assert b"Combien de places ?" in formulaire.data
 
     # 3. Il achète 3 places et voit la confirmation, ses points sont déduits
     confirmation = client.post("/purchasePlaces", data={
@@ -27,7 +27,7 @@ def test_parcours_complet_d_une_reservation():
         "places": "3",
     }, follow_redirects=True)
     assert b"Reservation confirmee : 3 places achetees" in confirmation.data
-    assert b"Points available: 10" in confirmation.data
+    assert b"Points disponibles : 10" in confirmation.data
 
     # 4. Il retrouve sa réservation dans "Mes reservations"
     assert b'href="/mes-reservations"' in confirmation.data
@@ -51,7 +51,7 @@ def test_parcours_avec_une_erreur_puis_une_correction():
         "places": "5",
     }, follow_redirects=True)
     assert b"Desole pas assez de points" in erreur.data
-    assert b"Points available: 4" in erreur.data
+    assert b"Points disponibles : 4" in erreur.data
 
     # Il corrige sa demande : la réservation passe
     correction = client.post("/purchasePlaces", data={
@@ -60,7 +60,7 @@ def test_parcours_avec_une_erreur_puis_une_correction():
         "places": "4",
     }, follow_redirects=True)
     assert b"Reservation confirmee : 4 places achetees" in correction.data
-    assert b"Points available: 0" in correction.data
+    assert b"Points disponibles : 0" in correction.data
 
 def test_parcours_d_un_visiteur_qui_consulte_le_tableau():
     client = server.app.test_client()

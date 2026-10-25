@@ -35,7 +35,7 @@ def test_achat_refuse_pour_un_autre_club():
     verifier_rien_n_a_change("Simply Lift", 13, "Spring Festival", 25)
 
 def test_achat_refuse_avec_un_champ_vide():
-    # Cas réel : le secrétaire clique sur Book sans rien saisir
+    # Cas réel : le secrétaire clique sur Reserver sans rien saisir
     client = client_connecte("Iron Temple")
     response = reserver(client, "Iron Temple", "Spring Festival", "")
     assert response.status_code == 200          # pas d'erreur 500

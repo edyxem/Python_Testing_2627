@@ -15,7 +15,7 @@ def client_connecte(nomClub):
 
 
 def reserver(client, club, competition, places, suivre_redirection=False):
-    # Envoie le formulaire d'achat de places, comme le bouton "Book"
+    # Envoie le formulaire d'achat de places, comme le bouton "Reserver"
     return client.post("/purchasePlaces", data={
         "club": club,
         "competition": competition,

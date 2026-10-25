@@ -1,45 +1,30 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes reservations | GUDLFT</title>
-</head>
-<body>
-    <h1>Reservations de {{club['name']}}</h1>
-    {% with messages = get_flashed_messages()%}
-    {% if messages %}
-        <ul>
-       {% for message in messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-       </ul>
-    {% endif%}
-    {%endwith%}
-    {% if lignes %}
-    <table>
-        <tr>
-            <th>Competition</th>
-            <th>Places reservees</th>
-            <th></th>
-        </tr>
-        {% for ligne in lignes %}
-        <tr>
-            <td>{{ligne['competition']['name']}}</td>
-            <td>{{ligne['places']}}</td>
-            <td>
-                {% if not estPassee(ligne['competition']) %}
-                <form action="{{url_for('annulerReservation')}}" method="post">
-                    <input type="hidden" name="competition" value="{{ligne['competition']['name']}}"/>
-                    <button type="submit">Annuler</button>
-                </form>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-    <p>Aucune reservation pour le moment</p>
-    {% endif %}
-    <a href="{{url_for('resume')}}">Retour aux competitions</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block titre %}Mes reservations{% endblock %}
+{% block contenu %}
+<h1>Reservations de {{club['name']}}</h1>
+{% if lignes %}
+<table class="tableau">
+    <tr>
+        <th>Competition</th>
+        <th>Places reservees</th>
+        <th></th>
+    </tr>
+    {% for ligne in lignes %}
+    <tr>
+        <td>{{ligne['competition']['name']}}</td>
+        <td>{{ligne['places']}}</td>
+        <td>
+            {% if not estPassee(ligne['competition']) %}
+            <form action="{{url_for('annulerReservation')}}" method="post">
+                <input type="hidden" name="competition" value="{{ligne['competition']['name']}}"/>
+                <button type="submit" class="bouton-secondaire">Annuler</button>
+            </form>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p class="carte">Aucune reservation pour le moment</p>
+{% endif %}
+{% endblock %}

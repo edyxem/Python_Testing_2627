@@ -9,7 +9,7 @@ def test_page_apres_achat_affiche_la_confirmation_et_les_points():
     response = reserver(client, "Simply Lift", "Spring Festival", "2", suivre_redirection=True)
     assert response.status_code == 200
     assert b"Reservation confirmee : 2 places achetees" in response.data
-    assert b"Points available: 11" in response.data
+    assert b"Points disponibles : 11" in response.data
 
 def test_message_confirmation_au_singulier_pour_une_place():
     client = client_connecte("Simply Lift")

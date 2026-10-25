@@ -1,37 +1,28 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summary | GUDLFT Registration</title>
-</head>
-<body>
-        <h2>Welcome, {{club['email']}} </h2><a href="{{url_for('logout')}}">Logout</a>
-        <a href="{{url_for('mesReservations')}}">Mes reservations</a>
+{% extends 'base.html' %}
+{% block titre %}Competitions{% endblock %}
+{% block contenu %}
+<h1>Bienvenue, {{club['email']}}</h1>
+<p class="solde">Points disponibles : {{club['points']}}</p>
 
-    {% with messages = get_flashed_messages()%}
-    {% if messages %}
-        <ul>
-       {% for message in messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-       </ul>
-    {% endif%}
-    Points available: {{club['points']}}
-    <h3>Competitions:</h3>
-    <ul>
-        {% for comp in competitions%}
-        <li>
-            {{comp['name']}}<br />
-            Date: {{comp['date']}}</br>
-            Number of Places: {{comp['numberOfPlaces']}}
-            {%if comp['numberOfPlaces']|int >0 and not estPassee(comp)%}
-            <a href="{{ url_for('book',competition=comp['name'],club=club['name']) }}">Book Places</a>
-            {%endif%}
-        </li>
-        <hr />
-        {% endfor %}
-    </ul>
-    {%endwith%}
-
-</body>
-</html>
+<h2>Competitions :</h2>
+<div class="grille">
+    {% for comp in competitions %}
+    {% if estPassee(comp) %}
+        {% set statut = 'Terminee' %}
+    {% elif comp['numberOfPlaces']|int <= 0 %}
+        {% set statut = 'Complete' %}
+    {% else %}
+        {% set statut = 'Ouverte' %}
+    {% endif %}
+    <article class="carte competition">
+        <span class="statut statut-{{statut|lower}}">{{statut}}</span>
+        <h3>{{comp['name']}}</h3>
+        <p>Date : {{comp['date']}}</p>
+        <p>Places restantes : {{comp['numberOfPlaces']}}</p>
+        {% if statut == 'Ouverte' %}
+        <a class="bouton" href="{{ url_for('book',competition=comp['name'],club=club['name']) }}">Reserver des places</a>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}
