@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes reservations | GUDLFT</title>
+</head>
+<body>
+    <h1>Reservations de {{club['name']}}</h1>
+    {% if reservations %}
+    <table>
+        <tr>
+            <th>Competition</th>
+            <th>Places reservees</th>
+        </tr>
+        {% for competition, places in reservations.items() %}
+        <tr>
+            <td>{{competition}}</td>
+            <td>{{places}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Aucune reservation pour le moment</p>
+    {% endif %}
+    <a href="{{url_for('resume')}}">Retour aux competitions</a>
+</body>
+</html>

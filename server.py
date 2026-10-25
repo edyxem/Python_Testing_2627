@@ -129,6 +129,22 @@ def tableauPoints():
 app.add_url_rule('/tableau-points', view_func=tableauPoints)
 
 
+def mesReservations():
+    matchingClubs = [c for c in clubs if c['name'] == session.get('club')]
+    if not matchingClubs:
+        flash("Desole vous devez etre connecte avec ce club")
+        return render_template('index.html')
+    club = matchingClubs[0]
+    # On garde seulement les réservations du club connecté : {competition: places}
+    placesParCompetition = {}
+    for (nomClub, nomCompetition), places in reservations.items():
+        if nomClub == club['name']:
+            placesParCompetition[nomCompetition] = places
+    return render_template('mes_reservations.html', club=club, reservations=placesParCompetition)
+
+app.add_url_rule('/mes-reservations', view_func=mesReservations)
+
+
 @app.route('/logout')
 def logout():
     session.pop('club', None)
