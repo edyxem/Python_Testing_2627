@@ -1,0 +1,9 @@
+[run]
+# On mesure la couverture du code de l'application, pas celle des tests
+source = .
+omit =
+    tests/*
+    venv/*
+
+[report]
+show_missing = True
