@@ -30,7 +30,7 @@ def test_reservation_acceptee_pour_une_competition_future():
         "places": "1",
     })
     assert response.status_code == 200
-    assert b"Great-booking complete!" in response.data
+    assert b"Reservation confirmee" in response.data
 
 def test_pas_de_lien_de_reservation_pour_une_competition_passee():
     client = server.app.test_client()
