@@ -3,7 +3,7 @@ from outils import trouver, client_connecte
 
 # Tests de la page /book/<competition>/<club> (formulaire de réservation)
 
-FORMULAIRE = b"How many places?"
+FORMULAIRE = b"Combien de places ?"
 
 def ouvrir_page_reservation(client):
     return client.get("/book/Spring Festival/Simply Lift")

@@ -38,7 +38,7 @@ class Secretaire(HttpUser):
     @task(3)
     def liste_des_competitions(self):
         with self.client.get("/resume", catch_response=True) as response:
-            self.verifier(response, TEMPS_MAX_CHARGEMENT, lambda r: b"Competitions:" in r.content)
+            self.verifier(response, TEMPS_MAX_CHARGEMENT, lambda r: b"Competitions :" in r.content)
 
     @task(2)
     def tableau_des_points(self):

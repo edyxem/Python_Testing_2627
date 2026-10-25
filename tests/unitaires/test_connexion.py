@@ -8,7 +8,7 @@ def connecter(email):
 def test_login_avec_email_valide():
     response = connecter("john@simplylift.co")
     assert response.status_code == 200
-    assert b"Welcome, john@simplylift.co" in response.data
+    assert b"Bienvenue, john@simplylift.co" in response.data
 
 def test_login_avec_email_inconnu():
     response = connecter("inconnu@test.com")
@@ -18,13 +18,13 @@ def test_login_avec_email_inconnu():
 def test_login_avec_email_en_majuscules():
     response = connecter("JOHN@SimplyLift.co")
     assert response.status_code == 200
-    assert b"Welcome, john@simplylift.co" in response.data
+    assert b"Bienvenue, john@simplylift.co" in response.data
 
 def test_login_avec_espaces_autour_de_l_email():
     # Cas fréquent : un espace copié-collé avec l'email
     response = connecter("  john@simplylift.co ")
     assert response.status_code == 200
-    assert b"Welcome, john@simplylift.co" in response.data
+    assert b"Bienvenue, john@simplylift.co" in response.data
 
 def test_login_toujours_refuse_pour_un_email_inconnu():
     # Non-régression : la tolérance ne doit pas accepter n'importe quoi

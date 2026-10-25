@@ -1,26 +1,14 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUDLFT Registration</title>
-</head>
-<body>
-    <h1>Welcome to the GUDLFT Registration Portal!</h1>
-    {% with messages = get_flashed_messages()%}
-    {% if messages %}
-        <ul>
-       {% for message in messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-       </ul>
-    {% endif%}
-    {%endwith%}
-    Please enter your secretary email to continue:
-    <form action="showSummary" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id=""/>
-        <button type="submit">Enter</button>
+{% extends 'base.html' %}
+{% block titre %}Connexion{% endblock %}
+{% block contenu %}
+<section class="carte carte-etroite">
+    <h1>Bienvenue sur le portail de reservation GUDLFT !</h1>
+    <p>Entrez l'email du secretaire de votre club pour continuer :</p>
+    <form action="showSummary" method="post" class="formulaire">
+        <label for="email">Email :</label>
+        <input type="email" name="email" id="email" required/>
+        <button type="submit">Se connecter</button>
     </form>
-    <a href="{{url_for('tableauPoints')}}">Voir les points des clubs</a>
-</body>
-</html>
+    <p class="aide"><a href="{{url_for('tableauPoints')}}">Voir les points des clubs</a></p>
+</section>
+{% endblock %}

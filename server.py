@@ -66,7 +66,12 @@ def book(competition,club):
     if int(foundCompetition['numberOfPlaces']) <= 0:
         flash("Desole cette competition est complete")
         return render_template('welcome.html', club=foundClub, competitions=competitions)
-    return render_template('booking.html',club=foundClub,competition=foundCompetition)
+    # Le plus grand nombre de places que le club a le droit de prendre, pour le champ du formulaire
+    placesDejaReservees = reservations.get((foundClub['name'], foundCompetition['name']), 0)
+    placesMax = min(MAX_PLACES_PAR_COMPETITION - placesDejaReservees,
+                    int(foundClub['points']),
+                    int(foundCompetition['numberOfPlaces']))
+    return render_template('booking.html',club=foundClub,competition=foundCompetition,placesMax=placesMax)
 
 
 @app.route('/purchasePlaces',methods=['POST'])

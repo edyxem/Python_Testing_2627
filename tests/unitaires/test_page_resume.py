@@ -13,7 +13,7 @@ def test_resume_affiche_les_points_du_club():
     client = client_connecte("Simply Lift")
     response = client.get("/resume")
     assert response.status_code == 200
-    assert b"Points available: 13" in response.data
+    assert b"Points disponibles : 13" in response.data
 
 def test_pas_de_lien_de_reservation_pour_une_competition_passee():
     trouver(server.competitions, "Spring Festival")['date'] = "2020-03-27 10:00:00"

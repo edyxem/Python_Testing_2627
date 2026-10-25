@@ -1,17 +1,18 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking for {{competition['name']}} || GUDLFT</title>
-</head>
-<body>
-    <h2>{{competition['name']}}</h2>
-    Places available: {{competition['numberOfPlaces']}}
-    <form action="/purchasePlaces" method="post">
+{% extends 'base.html' %}
+{% block titre %}Reservation - {{competition['name']}}{% endblock %}
+{% block contenu %}
+<section class="carte carte-etroite">
+    <h1>{{competition['name']}}</h1>
+    <p>Date : {{competition['date']}}</p>
+    <p>Places restantes : {{competition['numberOfPlaces']}}</p>
+    <p>Points du club : {{club['points']}}</p>
+    <form action="{{url_for('purchasePlaces')}}" method="post" class="formulaire">
         <input type="hidden" name="club" value="{{club['name']}}">
         <input type="hidden" name="competition" value="{{competition['name']}}">
-        <label for="places">How many places?</label><input type="number" name="places" id=""/>
-        <button type="submit">Book</button>
+        <label for="places">Combien de places ?</label>
+        <input type="number" name="places" id="places" min="1" max="{{placesMax}}" required/>
+        <button type="submit">Reserver</button>
     </form>
-</body>
-</html>
+    <p class="aide">1 point par place. Votre club peut encore prendre {{placesMax}} place(s) sur cette competition (12 maximum par club).</p>
+</section>
+{% endblock %}
