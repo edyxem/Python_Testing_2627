@@ -28,7 +28,7 @@ def test_reservation_acceptee_avec_les_dernieres_places():
         "club": "Simply Lift",
         "competition": "Fall Classic",
         "places": "2",
-    })
+    }, follow_redirects=True)
     assert response.status_code == 200
     assert b"Reservation confirmee" in response.data
     assert int(competition['numberOfPlaces']) == 0

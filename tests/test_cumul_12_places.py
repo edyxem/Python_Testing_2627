@@ -9,7 +9,7 @@ def reserver(client, places):
         "club": "Simply Lift",          # 13 points
         "competition": "Spring Festival",
         "places": places,
-    })
+    }, follow_redirects=True)
 
 def test_cumul_de_reservations_refuse_au_dela_de_12_places():
     trouver(server.competitions, "Spring Festival")['date'] = "2999-03-27 10:00:00"

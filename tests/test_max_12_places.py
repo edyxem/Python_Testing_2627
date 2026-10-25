@@ -27,7 +27,7 @@ def test_reservation_acceptee_avec_exactement_12_places():
         "club": "Simply Lift",
         "competition": "Spring Festival",
         "places": "12",
-    })
+    }, follow_redirects=True)
     competition = trouver(server.competitions, "Spring Festival")
     assert response.status_code == 200
     assert b"Reservation confirmee" in response.data
