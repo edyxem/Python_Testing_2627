@@ -1,0 +1,5 @@
+[flake8]
+# Lignes de 120 caractères maximum au lieu de 79 : plus lisible sur un écran actuel
+max-line-length = 120
+# Dossiers qui ne contiennent pas notre code
+exclude = .git, __pycache__, .pytest_cache, venv, rapports

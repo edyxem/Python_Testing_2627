@@ -1,0 +1,30 @@
+RAPPORT FLAKE8 - GUDLFT
+=======================
+
+Outil      : flake8 7.4.1 (pycodestyle 2.15.0, pyflakes 4.0.3, mccabe 0.7.0)
+Commande   : python -m flake8
+Fichiers   : server.py et tous les fichiers Python de tests/
+Reglages   : fichier .flake8 (lignes de 120 caracteres maximum, dossiers venv et rapports exclus)
+Date       : 25/10/2026
+
+
+AVANT CORRECTION : 128 problemes
+--------------------------------
+
+Nombre  Code  Signification
+   102  E302  Il manque une 2e ligne vide avant une fonction (tous les fichiers de tests)
+    14  E231  Il manque un espace apres une virgule (server.py)
+     5  E305  Il manque une 2e ligne vide apres une fonction (server.py)
+     4  E111  Indentation qui n'est pas un multiple de 4 espaces (server.py, loadClubs et loadCompetitions)
+     2  E117  Ligne trop indentee (server.py, loadClubs et loadCompetitions)
+     1  W292  Pas de retour a la ligne a la fin du fichier (server.py)
+
+
+APRES CORRECTION : 0 probleme
+-----------------------------
+
+$ python -m flake8 --count
+0
+
+Les corrections ne touchent que la mise en forme (espaces, lignes vides, indentation) :
+le comportement de l'application et des tests est inchange.

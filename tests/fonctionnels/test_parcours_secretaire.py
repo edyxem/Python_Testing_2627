@@ -5,6 +5,7 @@ import server
 # passe par les pages et les formulaires, et on vérifie que chaque lien existe
 # sur la page avant de le "cliquer".
 
+
 def test_parcours_complet_d_une_reservation():
     client = server.app.test_client()
 
@@ -40,6 +41,7 @@ def test_parcours_complet_d_une_reservation():
     refus = client.get("/book/Spring Festival/Simply Lift")
     assert b"Desole vous devez etre connecte avec ce club" in refus.data
 
+
 def test_parcours_avec_une_erreur_puis_une_correction():
     client = server.app.test_client()
     client.post("/showSummary", data={"email": "admin@irontemple.com"})     # 4 points
@@ -61,6 +63,7 @@ def test_parcours_avec_une_erreur_puis_une_correction():
     }, follow_redirects=True)
     assert b"Reservation confirmee : 4 places achetees" in correction.data
     assert b"Points disponibles : 0" in correction.data
+
 
 def test_parcours_d_un_visiteur_qui_consulte_le_tableau():
     client = server.app.test_client()

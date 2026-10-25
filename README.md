@@ -82,9 +82,19 @@ python -m locust -f tests/performance/locustfile.py --headless -u 6 -r 6 -t 1m -
 
 Sans `--headless`, Locust ouvre une interface sur <http://localhost:8089>.
 
+### Qualité du code (Flake8)
+
+Flake8 vérifie que le code respecte les règles de style de Python (PEP 8). Sa configuration est dans `.flake8` (lignes de 120 caractères maximum).
+
+```bash
+python -m flake8
+```
+
+Aucun message affiché = aucun problème.
+
 ## Rapports et résultats
 
-Les rapports sont dans `rapports/` : `rapport_tests.txt` (pytest) et `rapport_performance.html` (Locust).
+Les rapports sont dans `rapports/` : `rapport_tests.txt` (pytest), `rapport_performance.html` (Locust) et `rapport_flake8.txt` (Flake8).
 
 | Mesure | Résultat | Objectif |
 |---|---|---|
@@ -93,6 +103,7 @@ Les rapports sont dans `rapports/` : `rapport_tests.txt` (pytest) et `rapport_pe
 | Performance (6 utilisateurs, 1 min) | 183 requêtes, 0 échec | Aucun échec |
 | Chargement le plus lent | 0,9 s | Moins de 5 s |
 | Mise à jour la plus lente | 0,8 s | Moins de 2 s |
+| Flake8 | 0 problème (128 corrigés) | Aucun problème |
 
 ## Conventions de nommage
 
@@ -117,4 +128,4 @@ Les rapports sont dans `rapports/` : `rapport_tests.txt` (pytest) et `rapport_pe
 
 ## Liens utiles
 
-[Flask](https://flask.palletsprojects.com/) · [Jinja2](https://jinja.palletsprojects.com/) · [pytest](https://docs.pytest.org/) · [coverage](https://coverage.readthedocs.io/) · [Locust](https://docs.locust.io/)
+[Flask](https://flask.palletsprojects.com/) · [Jinja2](https://jinja.palletsprojects.com/) · [pytest](https://docs.pytest.org/) · [coverage](https://coverage.readthedocs.io/) · [Locust](https://docs.locust.io/) · [Flake8](https://flake8.pycqa.org/)
