@@ -1,7 +1,8 @@
 import server
+from outils import client_connecte
 
 def test_reservation_refusee_si_points_insuffisants():
-    client = server.app.test_client()
+    client = client_connecte("Iron Temple")
     competition = [c for c in server.competitions if c['name'] == "Spring Festival"][0]
     places_avant = int(competition['numberOfPlaces'])
     response = client.post("/purchasePlaces", data={
@@ -14,7 +15,7 @@ def test_reservation_refusee_si_points_insuffisants():
     assert int(competition['numberOfPlaces']) == places_avant
 
 def test_points_deduits_apres_reservation():
-    client = server.app.test_client()
+    client = client_connecte("Simply Lift")
     response = client.post("/purchasePlaces", data={
         "club": "Simply Lift",          # le club qui a 13 points
         "competition": "Spring Festival",
