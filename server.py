@@ -22,6 +22,8 @@ MAX_PLACES_PAR_COMPETITION = 12
 
 competitions = loadCompetitions()
 clubs = loadClubs()
+# Places déjà réservées par chaque club sur chaque compétition : {(club, competition): places}
+reservations = {}
 
 
 def estPassee(competition):
@@ -77,7 +79,9 @@ def purchasePlaces():
     if placesRequired > int(club['points']):
         flash("Desole pas assez de points")
         return render_template('welcome.html', club=club, competitions=competitions)
-    if placesRequired > MAX_PLACES_PAR_COMPETITION:
+    cleReservation = (club['name'], competition['name'])
+    placesDejaReservees = reservations.get(cleReservation, 0)
+    if placesDejaReservees + placesRequired > MAX_PLACES_PAR_COMPETITION:
         flash("Desole maximum 12 places par competition")
         return render_template('welcome.html', club=club, competitions=competitions)
     if placesRequired > int(competition['numberOfPlaces']):
@@ -85,6 +89,7 @@ def purchasePlaces():
         return render_template('welcome.html', club=club, competitions=competitions)
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
     club['points'] = int(club['points'])-placesRequired
+    reservations[cleReservation] = placesDejaReservees + placesRequired
     if placesRequired == 1:
         flash("Reservation confirmee : 1 place achetee")
     else:

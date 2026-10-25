@@ -7,3 +7,4 @@ def pytest_runtest_setup(item):
     # modifier les clubs ou compétitions du suivant.
     server.clubs = server.loadClubs()
     server.competitions = server.loadCompetitions()
+    server.reservations = {}
