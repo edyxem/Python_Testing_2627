@@ -1,18 +1,18 @@
 import json
 from datetime import datetime
-from flask import Flask,render_template,request,redirect,flash,url_for,session
+from flask import Flask, render_template, request, redirect, flash, url_for, session
 
 
 def loadClubs():
     with open('clubs.json') as c:
-         listOfClubs = json.load(c)['clubs']
-         return listOfClubs
+        listOfClubs = json.load(c)['clubs']
+        return listOfClubs
 
 
 def loadCompetitions():
     with open('competitions.json') as comps:
-         listOfCompetitions = json.load(comps)['competitions']
-         return listOfCompetitions
+        listOfCompetitions = json.load(comps)['competitions']
+        return listOfCompetitions
 
 
 app = Flask(__name__)
@@ -30,13 +30,16 @@ def estPassee(competition):
     dateCompetition = datetime.strptime(competition['date'], "%Y-%m-%d %H:%M:%S")
     return dateCompetition < datetime.now()
 
+
 app.jinja_env.globals['estPassee'] = estPassee
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/showSummary',methods=['POST'])
+
+@app.route('/showSummary', methods=['POST'])
 def showSummary():
     emailSaisi = request.form['email'].strip().lower()
     matchingClubs = [club for club in clubs if club['email'].lower() == emailSaisi]
@@ -45,11 +48,11 @@ def showSummary():
         return render_template('index.html')
     club = matchingClubs[0]
     session['club'] = club['name']
-    return render_template('welcome.html',club=club,competitions=competitions)
+    return render_template('welcome.html', club=club, competitions=competitions)
 
 
 @app.route('/book/<competition>/<club>')
-def book(competition,club):
+def book(competition, club):
     matchingClubs = [c for c in clubs if c['name'] == club]
     matchingCompetitions = [c for c in competitions if c['name'] == competition]
     if not matchingClubs or not matchingCompetitions:
@@ -71,10 +74,10 @@ def book(competition,club):
     placesMax = min(MAX_PLACES_PAR_COMPETITION - placesDejaReservees,
                     int(foundClub['points']),
                     int(foundCompetition['numberOfPlaces']))
-    return render_template('booking.html',club=foundClub,competition=foundCompetition,placesMax=placesMax)
+    return render_template('booking.html', club=foundClub, competition=foundCompetition, placesMax=placesMax)
 
 
-@app.route('/purchasePlaces',methods=['POST'])
+@app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
     matchingCompetitions = [c for c in competitions if c['name'] == request.form['competition']]
     matchingClubs = [c for c in clubs if c['name'] == request.form['club']]
@@ -125,11 +128,13 @@ def resume():
         return render_template('index.html')
     return render_template('welcome.html', club=matchingClubs[0], competitions=competitions)
 
+
 app.add_url_rule('/resume', view_func=resume)
 
 
 def tableauPoints():
     return render_template('tableau_points.html', clubs=clubs)
+
 
 app.add_url_rule('/tableau-points', view_func=tableauPoints)
 
@@ -147,6 +152,7 @@ def mesReservations():
         if cleReservation in reservations:
             lignes.append({'competition': competition, 'places': reservations[cleReservation]})
     return render_template('mes_reservations.html', club=club, lignes=lignes)
+
 
 app.add_url_rule('/mes-reservations', view_func=mesReservations)
 
@@ -174,6 +180,7 @@ def annulerReservation():
     else:
         flash("Reservation annulee : " + str(placesRendues) + " places rendues")
     return redirect(url_for('mesReservations'))
+
 
 app.add_url_rule('/annuler-reservation', view_func=annulerReservation, methods=['POST'])
 
