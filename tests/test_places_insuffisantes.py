@@ -1,10 +1,11 @@
 import server
+from outils import client_connecte
 
 def trouver(liste, nom):
     return [element for element in liste if element['name'] == nom][0]
 
 def test_reservation_refusee_si_pas_assez_de_places():
-    client = server.app.test_client()
+    client = client_connecte("Simply Lift")
     competition = trouver(server.competitions, "Fall Classic")
     competition['numberOfPlaces'] = "2"   # la compétition est presque complète
     club = trouver(server.clubs, "Simply Lift")                      # 13 points
@@ -20,7 +21,7 @@ def test_reservation_refusee_si_pas_assez_de_places():
 
 def test_reservation_acceptee_avec_les_dernieres_places():
     # Valeur limite : réserver exactement les places restantes doit fonctionner
-    client = server.app.test_client()
+    client = client_connecte("Simply Lift")
     competition = trouver(server.competitions, "Fall Classic")
     competition['numberOfPlaces'] = "2"
     response = client.post("/purchasePlaces", data={

@@ -1,10 +1,11 @@
 import server
+from outils import client_connecte
 
 def trouver(liste, nom):
     return [element for element in liste if element['name'] == nom][0]
 
 def test_reservation_refusee_pour_une_competition_passee():
-    client = server.app.test_client()
+    client = client_connecte("Simply Lift")
     competition = trouver(server.competitions, "Spring Festival")
     competition['date'] = "2020-03-27 10:00:00"      # date dans le passé
     places_avant = int(competition['numberOfPlaces'])
@@ -21,7 +22,7 @@ def test_reservation_refusee_pour_une_competition_passee():
 
 def test_reservation_acceptee_pour_une_competition_future():
     # Date fixée loin dans le futur pour que le test reste valable dans le temps
-    client = server.app.test_client()
+    client = client_connecte("Simply Lift")
     competition = trouver(server.competitions, "Spring Festival")
     competition['date'] = "2999-03-27 10:00:00"
     response = client.post("/purchasePlaces", data={

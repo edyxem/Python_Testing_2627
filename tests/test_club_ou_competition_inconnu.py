@@ -1,4 +1,5 @@
 import server
+from outils import client_connecte
 
 MESSAGE = b"Desole club ou competition introuvable"
 
@@ -16,7 +17,7 @@ def test_page_reservation_avec_club_inconnu():
 
 def test_page_reservation_valide_toujours_accessible():
     # Non-régression : un club et une compétition existants affichent le formulaire
-    client = server.app.test_client()
+    client = client_connecte("Simply Lift")
     response = client.get("/book/Spring Festival/Simply Lift")
     assert response.status_code == 200
     assert b"How many places?" in response.data

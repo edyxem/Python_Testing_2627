@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from flask import Flask,render_template,request,redirect,flash,url_for
+from flask import Flask,render_template,request,redirect,flash,url_for,session
 
 
 def loadClubs():
@@ -43,6 +43,7 @@ def showSummary():
         flash("Desole ce mail existe pas")
         return render_template('index.html')
     club = matchingClubs[0]
+    session['club'] = club['name']
     return render_template('welcome.html',club=club,competitions=competitions)
 
 
@@ -52,6 +53,9 @@ def book(competition,club):
     matchingCompetitions = [c for c in competitions if c['name'] == competition]
     if not matchingClubs or not matchingCompetitions:
         flash("Desole club ou competition introuvable")
+        return render_template('index.html')
+    if session.get('club') != club:
+        flash("Desole vous devez etre connecte avec ce club")
         return render_template('index.html')
     return render_template('booking.html',club=matchingClubs[0],competition=matchingCompetitions[0])
 
@@ -65,6 +69,9 @@ def purchasePlaces():
         return render_template('index.html')
     competition = matchingCompetitions[0]
     club = matchingClubs[0]
+    if session.get('club') != club['name']:
+        flash("Desole vous devez etre connecte avec ce club")
+        return render_template('index.html')
     try:
         placesRequired = int(request.form['places'])
     except ValueError:
@@ -102,4 +109,5 @@ def purchasePlaces():
 
 @app.route('/logout')
 def logout():
+    session.pop('club', None)
     return redirect(url_for('index'))

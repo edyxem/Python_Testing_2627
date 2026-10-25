@@ -1,11 +1,12 @@
 import server
+from outils import client_connecte
 
 def trouver(liste, nom):
     return [element for element in liste if element['name'] == nom][0]
 
 def reserver(places):
     trouver(server.competitions, "Spring Festival")['date'] = "2999-03-27 10:00:00"
-    client = server.app.test_client()
+    client = client_connecte("Simply Lift")
     return client.post("/purchasePlaces", data={
         "club": "Simply Lift",          # 13 points
         "competition": "Spring Festival",
