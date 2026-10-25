@@ -6,16 +6,34 @@
 </head>
 <body>
     <h1>Reservations de {{club['name']}}</h1>
-    {% if reservations %}
+    {% with messages = get_flashed_messages()%}
+    {% if messages %}
+        <ul>
+       {% for message in messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+       </ul>
+    {% endif%}
+    {%endwith%}
+    {% if lignes %}
     <table>
         <tr>
             <th>Competition</th>
             <th>Places reservees</th>
+            <th></th>
         </tr>
-        {% for competition, places in reservations.items() %}
+        {% for ligne in lignes %}
         <tr>
-            <td>{{competition}}</td>
-            <td>{{places}}</td>
+            <td>{{ligne['competition']['name']}}</td>
+            <td>{{ligne['places']}}</td>
+            <td>
+                {% if not estPassee(ligne['competition']) %}
+                <form action="{{url_for('annulerReservation')}}" method="post">
+                    <input type="hidden" name="competition" value="{{ligne['competition']['name']}}"/>
+                    <button type="submit">Annuler</button>
+                </form>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>

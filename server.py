@@ -135,14 +135,42 @@ def mesReservations():
         flash("Desole vous devez etre connecte avec ce club")
         return render_template('index.html')
     club = matchingClubs[0]
-    # On garde seulement les réservations du club connecté : {competition: places}
-    placesParCompetition = {}
-    for (nomClub, nomCompetition), places in reservations.items():
-        if nomClub == club['name']:
-            placesParCompetition[nomCompetition] = places
-    return render_template('mes_reservations.html', club=club, reservations=placesParCompetition)
+    # Une ligne par compétition réservée par le club connecté
+    lignes = []
+    for competition in competitions:
+        cleReservation = (club['name'], competition['name'])
+        if cleReservation in reservations:
+            lignes.append({'competition': competition, 'places': reservations[cleReservation]})
+    return render_template('mes_reservations.html', club=club, lignes=lignes)
 
 app.add_url_rule('/mes-reservations', view_func=mesReservations)
+
+
+def annulerReservation():
+    matchingClubs = [c for c in clubs if c['name'] == session.get('club')]
+    if not matchingClubs:
+        flash("Desole vous devez etre connecte avec ce club")
+        return render_template('index.html')
+    club = matchingClubs[0]
+    cleReservation = (club['name'], request.form['competition'])
+    matchingCompetitions = [c for c in competitions if c['name'] == request.form['competition']]
+    if not matchingCompetitions or cleReservation not in reservations:
+        flash("Desole aucune reservation a annuler pour cette competition")
+        return redirect(url_for('mesReservations'))
+    competition = matchingCompetitions[0]
+    if estPassee(competition):
+        flash("Desole cette competition est deja passee")
+        return redirect(url_for('mesReservations'))
+    placesRendues = reservations.pop(cleReservation)
+    club['points'] = int(club['points']) + placesRendues
+    competition['numberOfPlaces'] = int(competition['numberOfPlaces']) + placesRendues
+    if placesRendues == 1:
+        flash("Reservation annulee : 1 place rendue")
+    else:
+        flash("Reservation annulee : " + str(placesRendues) + " places rendues")
+    return redirect(url_for('mesReservations'))
+
+app.add_url_rule('/annuler-reservation', view_func=annulerReservation, methods=['POST'])
 
 
 @app.route('/logout')
