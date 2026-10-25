@@ -29,7 +29,7 @@ def test_reservation_acceptee_pour_une_competition_future():
         "club": "Simply Lift",
         "competition": "Spring Festival",
         "places": "1",
-    })
+    }, follow_redirects=True)
     assert response.status_code == 200
     assert b"Reservation confirmee" in response.data
 

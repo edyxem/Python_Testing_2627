@@ -20,7 +20,7 @@ def test_points_deduits_apres_reservation():
         "club": "Simply Lift",          # le club qui a 13 points
         "competition": "Spring Festival",
         "places": "2",
-    })
+    }, follow_redirects=True)
     club = [c for c in server.clubs if c['name'] == "Simply Lift"][0]
     assert response.status_code == 200
     assert int(club['points']) == 11                 # 13 - 2

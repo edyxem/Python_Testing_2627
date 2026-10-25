@@ -11,7 +11,7 @@ def reserver(places):
         "club": "Simply Lift",          # 13 points
         "competition": "Spring Festival",
         "places": places,
-    })
+    }, follow_redirects=True)
 
 def test_message_confirmation_indique_le_nombre_de_places():
     response = reserver("3")

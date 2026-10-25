@@ -14,7 +14,7 @@ def reserver(client, club):
         "club": club,
         "competition": "Spring Festival",
         "places": "2",
-    })
+    }, follow_redirects=True)
 
 def test_achat_refuse_sans_connexion():
     client = server.app.test_client()

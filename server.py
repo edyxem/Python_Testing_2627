@@ -101,7 +101,17 @@ def purchasePlaces():
         flash("Reservation confirmee : 1 place achetee")
     else:
         flash("Reservation confirmee : " + str(placesRequired) + " places achetees")
-    return render_template('welcome.html', club=club, competitions=competitions)
+    return redirect(url_for('resume'))
+
+
+def resume():
+    matchingClubs = [c for c in clubs if c['name'] == session.get('club')]
+    if not matchingClubs:
+        flash("Desole vous devez etre connecte avec ce club")
+        return render_template('index.html')
+    return render_template('welcome.html', club=matchingClubs[0], competitions=competitions)
+
+app.add_url_rule('/resume', view_func=resume)
 
 
 # TODO: Add route for points display
