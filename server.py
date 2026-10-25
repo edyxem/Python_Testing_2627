@@ -38,7 +38,8 @@ def index():
 
 @app.route('/showSummary',methods=['POST'])
 def showSummary():
-    matchingClubs = [club for club in clubs if club['email'] == request.form['email']]
+    emailSaisi = request.form['email'].strip().lower()
+    matchingClubs = [club for club in clubs if club['email'].lower() == emailSaisi]
     if not matchingClubs:
         flash("Desole ce mail existe pas")
         return render_template('index.html')
