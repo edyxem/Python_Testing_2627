@@ -58,7 +58,15 @@ def book(competition,club):
     if session.get('club') != club:
         flash("Desole vous devez etre connecte avec ce club")
         return render_template('index.html')
-    return render_template('booking.html',club=matchingClubs[0],competition=matchingCompetitions[0])
+    foundClub = matchingClubs[0]
+    foundCompetition = matchingCompetitions[0]
+    if estPassee(foundCompetition):
+        flash("Desole cette competition est deja passee")
+        return render_template('welcome.html', club=foundClub, competitions=competitions)
+    if int(foundCompetition['numberOfPlaces']) <= 0:
+        flash("Desole cette competition est complete")
+        return render_template('welcome.html', club=foundClub, competitions=competitions)
+    return render_template('booking.html',club=foundClub,competition=foundCompetition)
 
 
 @app.route('/purchasePlaces',methods=['POST'])
