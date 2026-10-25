@@ -29,5 +29,5 @@ def test_reservation_acceptee_avec_les_dernieres_places():
         "places": "2",
     })
     assert response.status_code == 200
-    assert b"Great-booking complete!" in response.data
+    assert b"Reservation confirmee" in response.data
     assert int(competition['numberOfPlaces']) == 0

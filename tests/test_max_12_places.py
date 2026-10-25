@@ -29,5 +29,5 @@ def test_reservation_acceptee_avec_exactement_12_places():
     })
     competition = trouver(server.competitions, "Spring Festival")
     assert response.status_code == 200
-    assert b"Great-booking complete!" in response.data
+    assert b"Reservation confirmee" in response.data
     assert int(competition['numberOfPlaces']) == 13    # 25 - 12
