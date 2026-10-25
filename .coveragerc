@@ -7,3 +7,7 @@ omit =
 
 [report]
 show_missing = True
+
+[html]
+# Rapport de couverture détaillé, gardé avec les autres rapports
+directory = rapports/couverture
